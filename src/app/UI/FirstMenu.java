@@ -8,11 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.util.Objects;
 
 public class FirstMenu extends JFrame {
 
@@ -35,10 +31,11 @@ public class FirstMenu extends JFrame {
     RoundedButton destinationButton = new RoundedButton("           To?", new Color(0xf6f6f6), Color.black, 18);
     RoundedButton dateButton = new RoundedButton("         Select Your date", new Color(0xf6f6f6), Color.black, 18);
     RoundedButton flightTypeButton = new RoundedButton("Select Your flight type", new Color(0xf6f6f6), Color.black, 18);
+    JLabel error = new JLabel("");
 
 
     public FirstMenu() {
-        this.setTitle("First menus");
+        this.setTitle("Nizek Air");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setResizable(false); // Disable resizing
         this.setSize(400, 700); // Adjusted dimensions for a mobile-sized frame
@@ -88,7 +85,7 @@ public class FirstMenu extends JFrame {
         pfpLabel.setBounds(30, 25, 50, 50);
         headerLabel.add(pfpLabel);
         // welcome msg
-        JLabel welcome = new JLabel("Hello 'the user'");
+        JLabel welcome = new JLabel("Hello 'the user'");//TODO : add user name
         welcome.setBounds(80, 30, 75, 20);
         welcome.setForeground(Color.white);
         welcome.setFont(new Font("Arial", Font.PLAIN, 11));
@@ -117,6 +114,7 @@ public class FirstMenu extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error.setText("");
                 captureAndSaveImage();
                 FirstMenu.this.add(new CitySelectMenu(FirstMenu.this, startButton));
                 FirstMenu.this.mainPanel.setVisible(false);
@@ -135,6 +133,7 @@ public class FirstMenu extends JFrame {
         destinationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error.setText("");
                 captureAndSaveImage();
                 FirstMenu.this.add(new CitySelectMenu(FirstMenu.this, destinationButton, startButton.getText()));
                 FirstMenu.this.mainPanel.setVisible(false);
@@ -152,6 +151,7 @@ public class FirstMenu extends JFrame {
         dateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error.setText("");
                 captureAndSaveImage();
                 FirstMenu.this.add(new DateSelectMenu(FirstMenu.this, dateButton));
                 FirstMenu.this.mainPanel.setVisible(false);
@@ -170,6 +170,7 @@ public class FirstMenu extends JFrame {
         flightTypeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error.setText("");
                 captureAndSaveImage();
                 FirstMenu.this.add(new FlightTypeSelectMenu(FirstMenu.this, flightTypeButton));
                 FirstMenu.this.mainPanel.setVisible(false);
@@ -179,24 +180,32 @@ public class FirstMenu extends JFrame {
         mainPanel.add(flightTypeButton);
 
 
+        error.setForeground(Color.red);
+        error.setBounds(40, 460, 305, 50);
+        error.setFont(new Font("Arial", Font.PLAIN, 14));
+        mainPanel.add(error);
+
+
         RoundedButton submitButton = new RoundedButton("Submit", new Color(0x192032), Color.white, 18);
         submitButton.setBounds(40, 400, 305, 50);
         submitButton.setForeground(Color.black);
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!startButton.getText().equals("       From?") &&!destinationButton.getText().equals("           To?")
+                &&!dateButton.getText().equals("         Select Your date")&&!flightTypeButton.getText().equals("Select Your flight type")) {
+                    error.setText("");
+                    FirstMenu.this.add(new SubmittedMenu(FirstMenu.this));
+                    FirstMenu.this.mainPanel.setVisible(false);
+                    FirstMenu.this.headerLabel.setVisible(false);
+
+                }else error.setText("*all Fields must be completed");
+            }
+        });
         mainPanel.add(submitButton);
         this.add(mainPanel);
         this.add(headerLabel);
 
-    }
-
-    private void captureAndSaveImage() {
-        try {
-            Robot robot = new Robot();
-            BufferedImage image = robot.createScreenCapture(getBounds());
-            BufferedImage imageBlur= cropImage(blur(image,5,0),0,30);
-            ImageIO.write(imageBlur, "png", new File("assets/blurBack.png"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     public static BufferedImage blur(BufferedImage img, int range, int angle) {
@@ -208,8 +217,8 @@ public class FirstMenu extends JFrame {
 
                 //horizontal
 
-                int red[] = new int[range * 2], green[] = new int[range * 2], blue[] = new int[range * 2];
-                int pixels[] = new int[range * 2];
+                int[] red = new int[range * 2], green = new int[range * 2], blue = new int[range * 2];
+                int[] pixels = new int[range * 2];
 
                 for (int i = 0; i < pixels.length; i++) {
                     pixels[i] = img.getRGB(clamp(x - clamp(range / 2, 0, range) + i, 0, img.getWidth() - 1), clamp(y - clamp(range / 2, 0, range) + (int) (i * Math.toRadians(angle)), 0, img.getHeight() - 1));
@@ -245,17 +254,28 @@ public class FirstMenu extends JFrame {
         return Math.max(min, Math.min(max, value));
     }
 
-    private BufferedImage cropImage(BufferedImage src, int x , int y) {
-        BufferedImage dest = src.getSubimage(x, y, src.getWidth(), src.getHeight()-y);
-        return dest;
-    }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new FirstMenu();
             }
         });
+    }
+
+    private void captureAndSaveImage() {
+        try {
+            Robot robot = new Robot();
+            BufferedImage image = robot.createScreenCapture(getBounds());
+            BufferedImage imageBlur = cropImage(blur(image, 5, 0), 0, 30);
+            ImageIO.write(imageBlur, "png", new File("assets/blurBack.png"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private BufferedImage cropImage(BufferedImage src, int x, int y) {
+        BufferedImage dest = src.getSubimage(x, y, src.getWidth(), src.getHeight() - y);
+        return dest;
     }
 
 }

@@ -66,7 +66,7 @@ public class DateSelectMenu extends JPanel {
         datePanel.add(dayLabel);
         // day bot button
         RoundedButton botDay = new RoundedButton("⬇", new Color(0xf6f6f6), Color.black, 21);
-        botDay.setBounds(0,  (datePanel.getHeight() / 3)- 42, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
+        botDay.setBounds(0,  (datePanel.getHeight() / 3)*2- 42, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
         botDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,7 +145,7 @@ public class DateSelectMenu extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    button.setText(dayLabel.getText()+"/"+monthLabel.getText()+"/"+yearLabel.getText());
+                    button.setText(dayLabel.getText()+monthLabel.getText()+yearLabel.getText());
                     button.setFont(new Font("Arial", Font.PLAIN, 20));
                 DateSelectMenu.this.setVisible(false);
                 datePanel.setVisible(false);
