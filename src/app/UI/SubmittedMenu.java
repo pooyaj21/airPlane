@@ -51,14 +51,10 @@ public class SubmittedMenu extends JPanel {
 
     JPanel headerLabel = new JPanel();
     Random random = new Random();
-    String randomLetter = String.valueOf((char) (random.nextInt(26) + 'A'));
-    int randomNumber = random.nextInt(10);
-
 
     public SubmittedMenu(FirstMenu firstMenu) {
 
-        String randomFlightCode = String.valueOf((char) (random.nextInt(26) + 'A')) + (char) (random.nextInt(26) + 'A')
-                + "-" + random.nextInt(10) + random.nextInt(10) + random.nextInt(10);
+        String randomFlightCode = String.valueOf((char) (random.nextInt(26) + 'A')) + (char) (random.nextInt(26) + 'A') + "-" + random.nextInt(10) + random.nextInt(10) + random.nextInt(10);
         String randomGate = String.valueOf((char) (random.nextInt(26) + 'A')) + random.nextInt(10);
         String randomTerminal = String.valueOf(random.nextInt(10)) + random.nextInt(10);
         String randomSeatNumber = String.valueOf((char) (random.nextInt(26) + 'A')) + random.nextInt(10);
@@ -147,7 +143,7 @@ public class SubmittedMenu extends JPanel {
         name.setForeground(new Color(0xB2B0B0));
         mainPanel.add(name);
 
-        JLabel passenger = new JLabel("the user");//TODO : add user name
+        JLabel passenger = new JLabel(firstMenu.theUserName);
         passenger.setBounds(30, 195, 100, 40);
         passenger.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(passenger);
@@ -242,7 +238,7 @@ public class SubmittedMenu extends JPanel {
         headerLabel.add(headerImage);
         this.add(headerLabel);
 
-        RoundedButton submitButton = new RoundedButton("Print the Ticket", new Color(0x192032), Color.white, 18);
+        RoundedButton submitButton = new RoundedButton("Print the Ticket",30, new Color(0x192032), Color.white, 18);
         submitButton.setBounds((this.getWidth() / 20), (this.getHeight() / 20) * 16 + 20, (this.getWidth() / 10) * 9, (this.getHeight() / 10));
         submitButton.addActionListener(new ActionListener() {
             @Override

@@ -25,7 +25,7 @@ public class FlightTypeSelectMenu extends JPanel {
             flightTypeNames.add(flightType.getName());
         }
         for (int i = 0; i < flightTypeNames.size(); i++) {
-            RoundedButton flightType = new RoundedButton(flightTypeNames.get(i), new Color(0xf6f6f6), Color.black, 20);
+            RoundedButton flightType = new RoundedButton(flightTypeNames.get(i),30, new Color(0xf6f6f6), Color.black, 20);
             flightType.setBounds(40, firstMenu.headerLabel.getHeight() + (50 * i), 305, 50);
             flightType.setHorizontalAlignment(SwingConstants.CENTER);
             flightType.setVerticalAlignment(SwingConstants.CENTER);

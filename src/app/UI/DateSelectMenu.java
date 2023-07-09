@@ -46,13 +46,15 @@ public class DateSelectMenu extends JPanel {
         datePanel.setBounds(0, (firstMenu.getHeight() / 10) * 7, firstMenu.getWidth(), (firstMenu.getHeight() / 10) * 3);
         datePanel.setLayout(null);
         // day top button
-        RoundedButton topDay = new RoundedButton("⬆", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton topDay = new RoundedButton("⬆",30, new Color(0xf6f6f6), Color.black, 21);
         topDay.setBounds(0, 10, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         topDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (day<31) day++;
-                else day=1;
+                if((month ==3||month ==5||month ==8||month ==10)&&day>=30)day=1;
+                else if ((month==1)&&day>=28)day=1;
+                else if ((month==0||month==2||month==4||month==6||month==7||month==9||month==11)&&day>=31)day=1;
+                else day++;
                 dayLabel.setText(String.valueOf(day));
 
             }
@@ -65,27 +67,33 @@ public class DateSelectMenu extends JPanel {
         dayLabel.setBounds(0,  (datePanel.getHeight() / 3)- 14, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         datePanel.add(dayLabel);
         // day bot button
-        RoundedButton botDay = new RoundedButton("⬇", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton botDay = new RoundedButton("⬇",30, new Color(0xf6f6f6), Color.black, 21);
         botDay.setBounds(0,  (datePanel.getHeight() / 3)*2- 42, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
         botDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (day>1) day--;
-                else day=31;
+                if((month ==3||month ==5||month ==8||month ==10)&&day==1)day=30;
+                else if ((month==1)&&day==1)day=28;
+                else if ((month==0||month==2||month==4||month==6||month==7||month==9||month==11)&&day==1)day=31;
+                else day--;
                 dayLabel.setText(String.valueOf(day));
             }
         });
         datePanel.add(botDay);
 
         // month top button
-        RoundedButton topMonth = new RoundedButton("⬆", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton topMonth = new RoundedButton("⬆",30, new Color(0xf6f6f6), Color.black, 21);
         topMonth.setBounds((firstMenu.getWidth() / 3)+4, 10, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         topMonth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (month<11) month++;
                 else month=0;
+                if((month ==3||month ==5||month ==8||month ==10)&&day>30)day=30;
+                else if ((month==1)&&day>28)day=28;
+                else if ((month==0||month==2||month==4||month==6||month==7||month==9||month==11)&&day>31)day=31;
                 monthLabel.setText(months[month]);
+                dayLabel.setText(String.valueOf(day));
 
             }
         });
@@ -97,20 +105,24 @@ public class DateSelectMenu extends JPanel {
         monthLabel.setBounds((firstMenu.getWidth() / 3)+4,  (datePanel.getHeight() / 3)- 14, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         datePanel.add(monthLabel);
         // month bot button
-        RoundedButton botMonth = new RoundedButton("⬇", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton botMonth = new RoundedButton("⬇",30, new Color(0xf6f6f6), Color.black, 21);
         botMonth.setBounds((firstMenu.getWidth() / 3)+4,  (datePanel.getHeight() / 3)*2- 42, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
         botMonth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (month>0) month--;
                 else month =11;
+                if((month ==3||month ==5||month ==8||month ==10)&&day>30)day=30;
+                else if ((month==1)&&day>28)day=28;
+                else if ((month==0||month==2||month==4||month==6||month==7||month==9||month==11)&&day>31)day=31;
                 monthLabel.setText(months[month]);
+                dayLabel.setText(String.valueOf(day));
             }
         });
         datePanel.add(botMonth);
 
         // year top button
-        RoundedButton topYear = new RoundedButton("⬆", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton topYear = new RoundedButton("⬆",30, new Color(0xf6f6f6), Color.black, 21);
         topYear.setBounds((firstMenu.getWidth() / 3)*2, 10, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         topYear.addActionListener(new ActionListener() {
             @Override
@@ -128,7 +140,7 @@ public class DateSelectMenu extends JPanel {
         yearLabel.setBounds((firstMenu.getWidth() / 3)*2,  (datePanel.getHeight() / 3)- 14, (firstMenu.getWidth() / 3)-8, (datePanel.getHeight() / 3) - 28);
         datePanel.add(yearLabel);
         // year bot button
-        RoundedButton botYear = new RoundedButton("⬇", new Color(0xf6f6f6), Color.black, 21);
+        RoundedButton botYear = new RoundedButton("⬇",30, new Color(0xf6f6f6), Color.black, 21);
         botYear.setBounds((firstMenu.getWidth() / 3)*2,  (datePanel.getHeight() / 3)*2- 42, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
         botYear.addActionListener(new ActionListener() {
             @Override
@@ -140,7 +152,7 @@ public class DateSelectMenu extends JPanel {
         datePanel.add(botYear);
 
         //submit button
-        RoundedButton submitButton = new RoundedButton("Submit", new Color(0x192032), Color.white, 21);
+        RoundedButton submitButton = new RoundedButton("Submit",30, new Color(0x192032), Color.white, 21);
         submitButton.setBounds((firstMenu.getWidth() / 3)+4,  (datePanel.getHeight() / 3)*2, (firstMenu.getWidth() / 3)-8 , (datePanel.getHeight() / 3) - 28);
         submitButton.addActionListener(new ActionListener() {
             @Override

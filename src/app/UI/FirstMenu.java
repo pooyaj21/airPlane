@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Objects;
 
 public class FirstMenu extends JFrame {
 
@@ -27,12 +26,13 @@ public class FirstMenu extends JFrame {
         }
     };
     JPanel headerLabel = new JPanel();
-    RoundedButton startButton = new RoundedButton("       From?", new Color(0xf6f6f6), Color.black, 20);
-    RoundedButton destinationButton = new RoundedButton("           To?", new Color(0xf6f6f6), Color.black, 18);
-    RoundedButton dateButton = new RoundedButton("         Select Your date", new Color(0xf6f6f6), Color.black, 18);
-    RoundedButton flightTypeButton = new RoundedButton("Select Your flight type", new Color(0xf6f6f6), Color.black, 18);
+    RoundedButton startButton = new RoundedButton("       From?",30, new Color(0xf6f6f6), Color.black, 20);
+    RoundedButton destinationButton = new RoundedButton("           To?",30, new Color(0xf6f6f6), Color.black, 18);
+    RoundedButton dateButton = new RoundedButton("         Select Your date",30, new Color(0xf6f6f6), Color.black, 18);
+    RoundedButton flightTypeButton = new RoundedButton("Select Your flight type",30, new Color(0xf6f6f6), Color.black, 18);
     JLabel error = new JLabel("");
-
+    String theUserName ;
+    JLabel welcome  = new JLabel("Hello ");
 
     public FirstMenu() {
         this.setTitle("Nizek Air");
@@ -43,6 +43,9 @@ public class FirstMenu extends JFrame {
         this.setVisible(true);
         this.setBackground(new Color(0x508bd0));
         this.setLayout(null);
+        mainPanel.setVisible(false);
+        headerLabel.setVisible(false);
+        this.add(new WelcomeMenu(this));
 
 
         ImageIcon placeHolder = new ImageIcon("assets/Placeholder.png");// PLace Holder
@@ -69,24 +72,17 @@ public class FirstMenu extends JFrame {
         headerIcon = new ImageIcon(newimgHeader);
 
 
-        Image image = placeHolder.getImage(); // transform it
-        Image newimg = image.getScaledInstance(49, 49, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        placeHolder = new ImageIcon(newimg);
-
-
         headerLabel.setBounds(0, 0, this.getWidth(), (this.getHeight() / 10) * 2);
         headerLabel.setBackground(new Color(0x508bd0));
         headerLabel.setForeground(Color.white);
         headerLabel.setLayout(null);
-
 
         // setup Pfp
         JLabel pfpLabel = new JLabel(pfpIcon);
         pfpLabel.setBounds(30, 25, 50, 50);
         headerLabel.add(pfpLabel);
         // welcome msg
-        JLabel welcome = new JLabel("Hello 'the user'");//TODO : add user name
-        welcome.setBounds(80, 30, 75, 20);
+        welcome.setBounds(80, 30, 150, 20);
         welcome.setForeground(Color.white);
         welcome.setFont(new Font("Arial", Font.PLAIN, 11));
         headerLabel.add(welcome);
@@ -186,7 +182,7 @@ public class FirstMenu extends JFrame {
         mainPanel.add(error);
 
 
-        RoundedButton submitButton = new RoundedButton("Submit", new Color(0x192032), Color.white, 18);
+        RoundedButton submitButton = new RoundedButton("Submit",30, new Color(0x192032), Color.white, 18);
         submitButton.setBounds(40, 400, 305, 50);
         submitButton.setForeground(Color.black);
         submitButton.addActionListener(new ActionListener() {

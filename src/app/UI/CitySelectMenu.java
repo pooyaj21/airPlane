@@ -25,7 +25,7 @@ public class CitySelectMenu extends JPanel {
 
         ArrayList<String> citys = new ArrayList<>(defualtCitys);
         for (int i = 0; i < citys.size(); i++) {
-            RoundedButton city = new RoundedButton(citys.get(i), new Color(0xf6f6f6), Color.black, 20);
+            RoundedButton city = new RoundedButton(citys.get(i),30, new Color(0xf6f6f6), Color.black, 20);
             city.setBounds(40, firstMenu.headerLabel.getHeight() + (50 * i), 305, 50);
             city.setHorizontalAlignment(SwingConstants.CENTER);
             city.setVerticalAlignment(SwingConstants.CENTER);
@@ -60,7 +60,7 @@ public class CitySelectMenu extends JPanel {
         ArrayList<String> citys = new ArrayList<>(defualtCitys);
         citys.remove(firstButton);
         for (int i = 0; i < citys.size(); i++) {
-            RoundedButton city = new RoundedButton(citys.get(i), new Color(0xf6f6f6), Color.black, 20);
+            RoundedButton city = new RoundedButton(citys.get(i),30, new Color(0xf6f6f6), Color.black, 20);
             city.setBounds(40, firstMenu.headerLabel.getHeight() + (50 * i), 305, 50);
             city.setHorizontalAlignment(SwingConstants.CENTER);
             city.setVerticalAlignment(SwingConstants.CENTER);
